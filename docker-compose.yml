@@ -1,0 +1,15 @@
+version: '3.0'
+services:
+ web:
+      container_name: web
+      image: web
+      command: ./weeman.py
+      ports:
+         - 31337:31337
+ nginx:
+     container_name: nginx
+     image: nginxconf
+     ports:
+         - 80:80
+     links:
+         - web

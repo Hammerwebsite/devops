@@ -1,0 +1,35 @@
+stages:
+  - build_web
+  - buid_nginx
+  - deploy
+
+docker_build_web:
+  stage: build_web
+  script:
+    - export VERSION=$(grep "VERSION=" .env | cut -d= -f2 | head -1)
+    - echo "Build docker image web"
+    - docker build -t web:$VERSION .
+    - echo "Push docker image to Nexus"
+    #- docker push my_nexus.ru/web#
+  tags:
+    - runner
+ 
+docker_build_nginx: 
+  stage: buid_nginx
+  script:
+    - echo "Build docker image nginx"
+    - docker build -t nginx:latest -f nginx/Dockerfile
+    - echo "Push docker image to Nexus"
+    #- docker push my_nexus.ru/nginx#
+  tags:
+    - runner
+
+deploy to test:
+  stage: deploy
+  script:
+     - echo "Deploy to docker-compose"
+     - sshpass -p "$PASS" scp -o StrictHostKeyChecking=no -r docker-compose.yml user@webserver:/opt/ci/
+     - sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no user@webserver "/opt/ci/deploy.sh"
+  tags:
+    - runner
+
