@@ -1,6 +1,7 @@
 stages:
   - build_web
-  - buid_nginx
+  - build_nginx
+  - deploy
 
 docker_build_web:
   stage: build_web
