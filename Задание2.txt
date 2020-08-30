@@ -1,1 +1,0 @@
-%{NOTSPACE:name} %{NOTSPACE:from} %{IP} \[(?<timestamp>%{MONTHDAY}/%{MONTH}/%{YEAR}:%{TIME}) %{ISO8601_TIMEZONE:timezone}\] %{NOTSPACE:duration} %{NUMBER:bytes} %{WORD} \"%{WORD:method} %{URIPATH:request} %{GREEDYDATA:client_version}\" %{NUMBER:code}(%{GREEDYDATA:num})
