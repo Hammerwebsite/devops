@@ -11,10 +11,13 @@ docker_build_web:
     - echo "Push docker image to Nexus"
     #- docker push my_nexus.ru/web#
   only:
-    refs:
-        - chnanges
-    changes:
+    refs: 
+        - changes
+    changes: 
         - Dockerfile
+        - weeman/*.py
+        - weeman/**/*.py
+      
   tags:
     - runner
  
@@ -24,21 +27,12 @@ docker_build_nginx:
     - echo "Build docker image nginx"
     - docker build -t nginx:latest -f nginx/Dockerfile nginx/.
     - echo "Push docker image to Nexus"
-    #- docker push my_nexus.ru/nginx#
+    #- docker push my_nexus.ru/nginx#   
   only:
-    refs:
-        - chnanges
-    changes:
-        - nginx/Dockerfile
-  tags:
-    - runner
-
-deploy to webserver:
-  stage: deploy
-  script:
-     - echo "Deploy to docker-compose"
-     - sshpass -p "$PASS" scp -o StrictHostKeyChecking=no -r docker-compose.yml user@webserver:/opt/ci/
-     - sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no user@webserver "/opt/ci/deploy.sh"
+    refs: 
+        - changes
+    changes: 
+        - Dockerfile
   tags:
     - runner
 
