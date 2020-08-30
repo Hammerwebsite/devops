@@ -24,7 +24,7 @@ docker_build_nginx:
   tags:
     - runner
 
-deploy to test:
+deploy to webserver:
   stage: deploy
   script:
      - echo "Deploy to docker-compose"
