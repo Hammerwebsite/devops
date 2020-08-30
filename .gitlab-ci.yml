@@ -25,13 +25,11 @@ docker_build_nginx:
     - docker build -t nginx:latest -f nginx/Dockerfile nginx/.
     - echo "Push docker image to Nexus"
     #- docker push my_nexus.ru/nginx#
-<<<<<<< HEAD
   only:
     refs:
         - chnanges
     changes:
         - nginx/Dockerfile
-=======
   tags:
     - runner
 
@@ -41,7 +39,6 @@ deploy to webserver:
      - echo "Deploy to docker-compose"
      - sshpass -p "$PASS" scp -o StrictHostKeyChecking=no -r docker-compose.yml user@webserver:/opt/ci/
      - sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no user@webserver "/opt/ci/deploy.sh"
->>>>>>> e9da02bd9c5c33cb0a5ffda80de771e85acbfdaf
   tags:
     - runner
 
